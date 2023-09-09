@@ -1,9 +1,7 @@
-rootProject.name = "gradle-multi-module-template"
+rootProject.name = "spring-batch-test"
 
 include(
-    "subprojects:domain",
-    "subprojects:domain-jpa",
-    "subprojects:server"
+    "sbt-jpa",
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
@@ -21,7 +19,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from("kr.disdong:spring-version-catalog:0.0.13")
+            from("kr.disdong:spring-version-catalog:0.0.15")
         }
     }
 }
