@@ -1,7 +1,13 @@
-rootProject.name = "spring-batch-test"
+rootProject.name = "spring-study"
 
 include(
-    "sbatch-jpa-example",
+    "spring-batch-study-jpa",
+    "spring-reactive-study-core",
+    "spring-reactive-study-mvc-server",
+    "spring-reactive-study-server-test",
+    "spring-reactive-study-webflux-server",
+    "spring-reflection-study-jackson",
+    "spring-reflection-study-transactional",
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
