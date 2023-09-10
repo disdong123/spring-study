@@ -1,7 +1,7 @@
-package kr.disdong.spring.batch.job
+package kr.disdong.sbatch.jpa.example.job
 
-import kr.disdong.spring.batch.domain.Member
-import kr.disdong.spring.batch.domain.MemberRepository
+import kr.disdong.sbatch.jpa.example.domain.Member
+import kr.disdong.sbatch.jpa.example.domain.MemberRepository
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.job.builder.JobBuilder

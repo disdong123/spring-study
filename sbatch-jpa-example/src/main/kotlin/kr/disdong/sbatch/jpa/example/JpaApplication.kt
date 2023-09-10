@@ -1,4 +1,4 @@
-package kr.disdong.spring.batch
+package kr.disdong.sbatch.jpa.example
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

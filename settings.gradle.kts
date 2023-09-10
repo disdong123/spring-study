@@ -1,7 +1,7 @@
 rootProject.name = "spring-batch-test"
 
 include(
-    "sbt-jpa",
+    "sbatch-jpa-example",
 )
 
 enableFeaturePreview("VERSION_CATALOGS")

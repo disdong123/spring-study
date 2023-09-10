@@ -1,4 +1,4 @@
-package kr.disdong.spring.batch.domain
+package kr.disdong.sbatch.jpa.example.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
