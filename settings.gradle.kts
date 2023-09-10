@@ -2,6 +2,7 @@ rootProject.name = "spring-study"
 
 include(
     "spring-batch-study-jpa",
+    "spring-batch-study-multi-datasource",
     "spring-reactive-study-core",
     "spring-reactive-study-mvc-server",
     "spring-reactive-study-server-test",

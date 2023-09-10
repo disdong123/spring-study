@@ -1,0 +1,55 @@
+spring:
+  batch:
+    job:
+      name: ${job.name:NONE}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: h2
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.springframework.transaction.interceptor: TRACE
+
+---
+spring.config.activate.on-profile: local, default
+
+spring:
+  master-datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/srt_jpa
+    username: root
+    password: root
+  slave-datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/srt_jpa2
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+---
+spring.config.activate.on-profile: h2
+
+spring:
+  master-datasource:
+    jdbc-url: jdbc:h2:mem:testdb;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  slave-datasource:
+    jdbc-url: jdbc:h2:mem:testdb-ro;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
