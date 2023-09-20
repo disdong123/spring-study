@@ -9,6 +9,7 @@ include(
     "spring-reactive-study-webflux-server",
     "spring-reflection-study-jackson",
     "spring-reflection-study-transactional",
+    "spring-http-connection-study",
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
