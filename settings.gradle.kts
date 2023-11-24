@@ -10,6 +10,7 @@ include(
     "spring-reflection-study-jackson",
     "spring-reflection-study-transactional",
     "spring-http-connection-study",
+    "spring-sql-function-study"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
