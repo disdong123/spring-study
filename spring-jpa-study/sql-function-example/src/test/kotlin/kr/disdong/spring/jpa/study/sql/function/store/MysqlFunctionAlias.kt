@@ -1,0 +1,29 @@
+package kr.disdong.spring.jpa.study.sql.function.store
+
+import java.io.Serializable
+import java.math.BigDecimal
+
+class MysqlFunctionAlias {
+
+    companion object {
+        @JvmStatic
+        fun ST_DISTANCE_SPHERE(start: Point, end: Point): BigDecimal {
+            return BigDecimal.ONE
+        }
+
+        @JvmStatic
+        fun POINT(x: Double, y: Double): Point {
+            return Point(x, y)
+        }
+
+        fun createStDistanceSphereAlias(): String {
+            return """CREATE ALIAS IF NOT EXISTS ST_DISTANCE_SPHERE FOR "kr.disdong.spring.jpa.study.sql.function.store.MysqlFunctionAlias.ST_DISTANCE_SPHERE""""
+        }
+
+        fun createPointAlias(): String {
+            return """CREATE ALIAS IF NOT EXISTS POINT FOR "kr.disdong.spring.jpa.study.sql.function.store.MysqlFunctionAlias.POINT""""
+        }
+    }
+}
+
+class Point(val x: Double, val y: Double) : Serializable

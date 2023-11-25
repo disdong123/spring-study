@@ -1,16 +1,16 @@
 rootProject.name = "spring-study"
 
 include(
-    "spring-batch-study-jpa",
-    "spring-batch-study-multi-datasource",
-    "spring-reactive-study-core",
-    "spring-reactive-study-mvc-server",
-    "spring-reactive-study-server-test",
-    "spring-reactive-study-webflux-server",
-    "spring-reflection-study-jackson",
-    "spring-reflection-study-transactional",
+    "spring-batch-study:jpa-example",
+    "spring-batch-study:multi-datasource-example",
+    "spring-reactive-study:core",
+    "spring-reactive-study:mvc-server",
+    "spring-reactive-study:server-test",
+    "spring-reactive-study:webflux-server",
+    "spring-reflection-study-jackson-test",
     "spring-http-connection-study",
-    "spring-sql-function-study"
+    "spring-jpa-study:transactional-test",
+    "spring-jpa-study:sql-function-example"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
