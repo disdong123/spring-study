@@ -10,7 +10,7 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     runtimeOnly(libs.mysql.connector.java)
     // https://mvnrepository.com/artifact/com.h2database/h2
-    testImplementation("com.h2database:h2:2.2.220")
+    testImplementation(libs.h2.database)
 }
 
 tasks.getByName("bootJar") {

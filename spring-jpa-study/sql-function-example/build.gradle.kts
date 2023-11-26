@@ -10,8 +10,7 @@ dependencies {
     api(libs.infobip.spring.data.jpa.querydsl.boot.starter)
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     runtimeOnly(libs.mysql.connector.java)
-    runtimeOnly(libs.h2.database)
-    testImplementation("com.h2database:h2:2.2.220")
+    testImplementation(libs.h2.database)
 }
 
 tasks.getByName("bootJar") {
