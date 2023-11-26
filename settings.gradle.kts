@@ -17,6 +17,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 
 dependencyResolutionManagement {
     repositories {
+        mavenLocal()
         maven {
             url = uri("https://maven.pkg.github.com/disdong123/version-catalog")
             credentials {

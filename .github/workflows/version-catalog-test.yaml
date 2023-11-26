@@ -1,0 +1,121 @@
+name: For version catalog test
+
+on:
+  workflow_dispatch:
+    inputs:
+      version-catalog-repository:
+        description: "version catalog repository name"
+        default: "disdong123/version-catalog"
+        required: true
+      version-catalog-ref:
+        description: "version catalog reference"
+        required: true
+
+jobs:
+  simple-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          echo "version-catalog-repository: ${{ inputs.version-catalog-repository }}, version-catalog-ref: ${{ inputs.version-catalog-ref }}"
+          echo "github.server_url: ${{ github.server_url }}, github.repository: ${{ github.repository }}, github.run_id: ${{ github.run_id }}"
+  pending-status-processor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Create and send pending status to version catalog repository"
+        shell: bash
+        env:
+          TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          STATUSES_ENDPOINT: /repos/${{ inputs.version-catalog-repository }}/statuses/${{ inputs.version-catalog-ref }}
+          CONTEXT: ${{ github.workflow }} (${{ github.repository }})
+          DESCRIPTION: ${{ github.workflow }}
+          GH_TOKEN: ${{ secrets.DISDONG_TOKEN }}
+        run: |
+          gh api -X POST ${{ env.STATUSES_ENDPOINT }} \
+            -F state=pending \
+            -F description="${{ env.DESCRIPTION }}" \
+            -F context="${{ env.CONTEXT }}" \
+            -F target_url=${{ env.TARGET_URL }}
+  version-catalog-test:
+    needs: pending-status-processor
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+    steps:
+      - name: Checkout version catalog repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.version-catalog-repository }}
+          path: ${{ inputs.version-catalog-repository }}
+          token: ${{ secrets.DISDONG_TOKEN }}
+          ref: ${{ inputs.version-catalog-ref }}
+      - name: Extract version catalog current version
+        id: extract-version
+        run: |
+          VERSION=$(grep -oP 'version = "\K(.*?)(?=")' build.gradle.kts)
+          echo "::set-output name=version::$VERSION"
+        working-directory: ${{ inputs.version-catalog-repository }}
+      - name: publish to maven local
+        shell: bash
+        run: |
+          ./gradlew publishToMavenLocal
+        working-directory: ${{ inputs.version-catalog-repository }}
+      - name: Checkout current repository
+        uses: actions/checkout@v3
+      - name: Change version catalog current version in settings.gradle.kts
+        shell: bash
+        run: sed -i -r -E 's/catalog:[0-9]+\.[0-9]+\.[0-9]+/catalog:${{ steps.extract-version.outputs.version }}/' settings.gradle.kts
+      - name: Check current settings.gradle.kts
+        shell: bash
+        run: cat settings.gradle.kts
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "gradle"
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        env:
+          DISDONG_USERNAME: ${{ secrets.DISDONG_USERNAME }}
+          DISDONG_TOKEN: ${{ secrets.DISDONG_TOKEN }}
+        run: ./gradlew clean build
+  success-status-processor:
+    if: ${{ always() && contains(join(needs.version-catalog-test.result, ','), 'success') }}
+    needs: version-catalog-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Create and send success status to version catalog repository"
+        shell: bash
+        env:
+          TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          STATUSES_ENDPOINT: /repos/${{ inputs.version-catalog-repository }}/statuses/${{ inputs.version-catalog-ref }}
+          CONTEXT: ${{ github.workflow }} (${{ github.repository }})
+          DESCRIPTION: ${{ github.workflow }}
+          GH_TOKEN: ${{ secrets.DISDONG_TOKEN }}
+        run: |
+          gh api -X POST ${{ env.STATUSES_ENDPOINT }} \
+            -F state=success \
+            -F description="${{ env.DESCRIPTION }}" \
+            -F context="${{ env.CONTEXT }}" \
+            -F target_url=${{ env.TARGET_URL }}
+  failure-status-processor:
+    if: ${{ always() && contains(join(needs.version-catalog-test.result, ','), 'failure') }}
+    needs: version-catalog-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Create and send failure status to version catalog repository"
+        shell: bash
+        env:
+          TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          STATUSES_ENDPOINT: /repos/${{ inputs.version-catalog-repository }}/statuses/${{ inputs.version-catalog-ref }}
+          CONTEXT: ${{ github.workflow }} (${{ github.repository }})
+          DESCRIPTION: ${{ github.workflow }}
+          GH_TOKEN: ${{ secrets.DISDONG_TOKEN }}
+        run: |
+          gh api -X POST ${{ env.STATUSES_ENDPOINT }} \
+            -F state=failure \
+            -F description="${{ env.DESCRIPTION }}" \
+            -F context="${{ env.CONTEXT }}" \
+            -F target_url=${{ env.TARGET_URL }}
