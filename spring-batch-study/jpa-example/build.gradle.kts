@@ -4,11 +4,8 @@ plugins {
 }
 
 dependencies {
-    api(libs.spring.boot.starter.batch)
-    api(libs.spring.boot.starter.data.jpa)
-    api(libs.hibernate.types)
-    api(libs.infobip.spring.data.jpa.querydsl.boot.starter)
-    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    implementation(libs.spring.boot.starter.batch)
+    implementation(libs.spring.boot.starter.data.jpa)
     runtimeOnly(libs.mysql.connector.java)
     testImplementation(libs.h2.database)
 }

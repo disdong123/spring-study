@@ -4,12 +4,20 @@ plugins {
 }
 
 dependencies {
-    api(libs.spring.boot.starter.data.jpa)
-    api(libs.hibernate.types)
-    api(libs.infobip.spring.data.jpa.querydsl.boot.starter)
-    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.querydsl.jpa) {
+        artifact {
+            classifier = "jakarta"
+        }
+    }
+    kapt(libs.querydsl.apt) {
+        artifact {
+            classifier = "jakarta"
+        }
+    }
+    kapt(libs.jakarta.persistence.api)
+    kapt(libs.jakarta.annotation.api)
     runtimeOnly(libs.mysql.connector.java)
-    // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation(libs.h2.database)
 }
 

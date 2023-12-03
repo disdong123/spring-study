@@ -29,7 +29,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from("kr.disdong:spring-version-catalog:0.0.15")
+            from("kr.disdong:spring-version-catalog:0.0.18")
         }
     }
 }
