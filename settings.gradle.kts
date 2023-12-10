@@ -10,7 +10,8 @@ include(
     "spring-reflection-study-jackson-test",
     "spring-http-connection-study",
     "spring-jpa-study:transactional-test",
-    "spring-jpa-study:sql-function-example"
+    "spring-jpa-study:sql-function-example",
+    "web-server-example"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
