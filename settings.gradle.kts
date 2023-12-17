@@ -1,6 +1,8 @@
 rootProject.name = "spring-study"
 
 include(
+    "core",
+    "kotlin-example",
     "spring-batch-study:jpa-example",
     "spring-batch-study:multi-datasource-example",
     "spring-reactive-study:core",
@@ -30,7 +32,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from("kr.disdong:spring-version-catalog:0.0.18")
+            from("kr.disdong:spring-version-catalog:0.0.19")
         }
     }
 }
