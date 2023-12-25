@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(libs.spring.boot.starter.batch)
     implementation(libs.spring.boot.starter.data.jpa)
     runtimeOnly(libs.mysql.connector.java)

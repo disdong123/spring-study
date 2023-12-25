@@ -19,7 +19,7 @@ internal class ServerApplicationTest {
     @Test
     fun `RestTemplate 은 기본적으로 각 요청에 대해 새로운 커넥션을 생성한다`() {
         // val restTemplate = RestTemplate()
-        // println(restTemplate.getForObject("http://localhost:8080/default", String::class.java))
+        // logger.info(restTemplate.getForObject("http://localhost:8080/default", String::class.java))
 
         mockMvc.perform(get("/default"))
             .andExpect(status().isOk)
@@ -29,7 +29,7 @@ internal class ServerApplicationTest {
     @Test
     fun `BasicHttpClientConnectionManager 은 각 요청에 대해 새로운 커넥션을 생성한다`() {
         // val restTemplate = RestTemplate()
-        // println(restTemplate.getForObject("http://localhost:8080/basic", String::class.java))
+        // logger.info(restTemplate.getForObject("http://localhost:8080/basic", String::class.java))
 
         mockMvc.perform(get("/basic"))
             .andExpect(status().isOk)
@@ -39,7 +39,7 @@ internal class ServerApplicationTest {
     @Test
     fun `PoolingHttpClientConnectionManager 를 이용하면 커넥션 풀을 관리할 수 있다`() {
         // val restTemplate = RestTemplate()
-        // println(restTemplate.getForObject("http://localhost:8080/pool", String::class.java))
+        // logger.info(restTemplate.getForObject("http://localhost:8080/pool", String::class.java))
 
         mockMvc.perform(get("/pool"))
             .andExpect(status().isOk)
@@ -49,7 +49,7 @@ internal class ServerApplicationTest {
     @Test
     fun `RestTemplateBuilder 는 기본적으로 HttpComponentsClientHttpRequestFactory 을 이용하며 커넥션 풀을 갖는다`() {
         // val restTemplate = RestTemplate()
-        // println(restTemplate.getForObject("http://localhost:8080/builder", String::class.java))
+        // logger.info(restTemplate.getForObject("http://localhost:8080/builder", String::class.java))
 
         mockMvc.perform(get("/builder"))
             .andExpect(status().isOk)

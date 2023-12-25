@@ -1,14 +1,17 @@
 package kr.disdong.web.server.example
 
+import kr.disdong.core.Clogger
 import org.springframework.util.StopWatch
 import java.net.Socket
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class SimpleClient(private val hostName: String = "localhost", private val port: Int, private val message: String) {
+
+    private val logger = Clogger<SimpleClient>()
     fun run() {
         val socket = Socket(hostName, port)
-        println("Client connected: ${socket.inetAddress.hostAddress}")
+        logger.info("Client connected: ${socket.inetAddress.hostAddress}")
 
         val reader = socket.inputStream.bufferedReader()
         val writer = socket.outputStream.bufferedWriter()
@@ -17,7 +20,7 @@ class SimpleClient(private val hostName: String = "localhost", private val port:
         writer.newLine()
         writer.flush()
 
-        println("response from server: ${reader.readLine()}")
+        logger.info("response from server: ${reader.readLine()}")
 
         reader.close()
         writer.close()
@@ -26,6 +29,7 @@ class SimpleClient(private val hostName: String = "localhost", private val port:
 }
 
 fun test(loopCount: Int, port: Int) {
+    val logger = Clogger<SimpleClient>()
     val executorService = Executors.newFixedThreadPool(loopCount)
     val functionTimer = StopWatch()
     val client = SimpleClient(port = port, message = "hello, world")
@@ -39,7 +43,7 @@ fun test(loopCount: Int, port: Int) {
             loopTimer.start()
             client.run()
             loopTimer.stop()
-            println("[Loop Number: $i] end. Running time: ${loopTimer.totalTimeSeconds}")
+            logger.info("[Loop Number: $i] end. Running time: ${loopTimer.totalTimeSeconds}")
         }
     }
 
@@ -47,7 +51,7 @@ fun test(loopCount: Int, port: Int) {
     executorService.awaitTermination(100, TimeUnit.SECONDS)
     functionTimer.stop()
 
-    println("Total: ${functionTimer.totalTimeSeconds}")
+    logger.info("Total: ${functionTimer.totalTimeSeconds}")
 }
 
 fun main() {

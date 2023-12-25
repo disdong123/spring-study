@@ -1,5 +1,6 @@
 package kr.disdong.web.server.example
 
+import kr.disdong.core.Clogger
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 import java.nio.channels.SelectionKey
@@ -10,6 +11,7 @@ import java.nio.channels.SocketChannel
 class EventLoop(
     private val port: Int,
 ) : Runnable {
+    private val logger = Clogger<EventLoop>()
     private var selector: Selector? = null
     private var serverSocketChannel: ServerSocketChannel? = null
 
@@ -27,12 +29,12 @@ class EventLoop(
     }
 
     override fun run() {
-        println("Reactor started")
+        logger.info("Reactor started")
 
         while (true) {
-            println("before select()...")
+            logger.info("before select()...")
             selector!!.select()
-            println("after select()...")
+            logger.info("after select()...")
 
             val iter = selector!!.selectedKeys().iterator()
             while (iter.hasNext()) {
@@ -61,8 +63,9 @@ class AcceptHandler(
     private val selector: Selector,
     private val serverSocketChannel: ServerSocketChannel,
 ) : Handler {
+    private val logger = Clogger<AcceptHandler>()
     override fun handle() {
-        println("AcceptHandler.handle() start...")
+        logger.info("AcceptHandler.handle() start...")
 
         try {
             val socketChannel = serverSocketChannel.accept()
@@ -80,12 +83,13 @@ class EchoHandler(
     private val socketChannel: SocketChannel,
 ) : Handler {
 
+    private val logger = Clogger<EchoHandler>()
     private var selectionKey: SelectionKey? = null
     private val buffer = ByteBuffer.allocate(256)
     private var state = State.READ
 
     init {
-        println("EchoHandler.init() start...")
+        logger.info("EchoHandler.init() start...")
         socketChannel.configureBlocking(false)
         selectionKey = socketChannel.register(selector, SelectionKey.OP_READ)
         selectionKey!!.attach(this)
@@ -93,10 +97,10 @@ class EchoHandler(
     }
 
     override fun handle() {
-        println("EchoHandler.handle() start...")
+        logger.info("EchoHandler.handle() start...")
         try {
             if (state == State.READ) {
-                println("EchoHandler.handle() read...")
+                logger.info("EchoHandler.handle() read...")
                 val readCount = socketChannel.read(buffer)
                 if (readCount > 0) {
                     buffer.flip()
@@ -105,7 +109,7 @@ class EchoHandler(
                 selectionKey!!.interestOps(SelectionKey.OP_WRITE)
                 state = State.WRITE
             } else if (state == State.WRITE) {
-                println("EchoHandler.handle() write...")
+                logger.info("EchoHandler.handle() write...")
                 Thread.sleep(3000)
                 socketChannel.write(buffer)
                 buffer.clear()

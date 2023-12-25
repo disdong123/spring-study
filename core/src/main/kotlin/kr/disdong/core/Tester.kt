@@ -15,7 +15,7 @@ object Tester {
         val latch = CountDownLatch(count)
         for (i in 1..count) {
             try {
-                // println("current count: ${latch.count}")
+                // logger.info("current count: ${latch.count}")
                 es.submit {
                     fn()
                 }

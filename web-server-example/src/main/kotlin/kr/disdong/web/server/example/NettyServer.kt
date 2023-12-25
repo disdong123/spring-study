@@ -10,13 +10,16 @@ import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.logging.LogLevel
 import io.netty.handler.logging.LoggingHandler
+import kr.disdong.core.Clogger
 
 class NettyServer(
     private val port: Int,
     private val workerThreadCount: Int,
 ) : Runnable {
+
+    private val logger = Clogger<NettyServer>()
     override fun run() {
-        println("NettyServer started...")
+        logger.info("NettyServer started...")
         val mainGroup = NioEventLoopGroup(10)
         val workerGroup = NioEventLoopGroup(workerThreadCount)
         try {
@@ -38,9 +41,11 @@ class NettyServer(
 }
 
 class WorkerHandler : ChannelInitializer<SocketChannel>() {
+
+    private val logger = Clogger<WorkerHandler>()
     private val nettyEchoHandler = NettyEchoHandler()
     override fun initChannel(ch: SocketChannel) {
-        println("initChannel start...")
+        logger.info("initChannel start...")
         val p = ch.pipeline()
         p.addLast(nettyEchoHandler)
     }
@@ -48,8 +53,10 @@ class WorkerHandler : ChannelInitializer<SocketChannel>() {
 
 @Sharable
 class NettyEchoHandler : ChannelInboundHandlerAdapter() {
+
+    private val logger = Clogger<NettyEchoHandler>()
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
-        println("${Thread.currentThread()}  channelRead start...")
+        logger.info("${Thread.currentThread()}  channelRead start...")
         Thread.sleep(3000)
         ctx.write(msg)
     }

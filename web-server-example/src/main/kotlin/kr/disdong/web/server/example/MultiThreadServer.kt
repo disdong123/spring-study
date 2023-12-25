@@ -1,16 +1,18 @@
 package kr.disdong.web.server.example
 
+import kr.disdong.core.Clogger
 import java.net.ServerSocket
 import java.net.Socket
 
 class MultiThreadServer(private val port: Int) : Runnable {
+    private val logger = Clogger<MultiThreadServer>()
     override fun run() {
-        println("Server started at port $port")
+        logger.info("Server started at port $port")
         val serverSocket = ServerSocket(port)
 
         while (true) {
             val clientSocket = serverSocket.accept()
-            println("Client connected: ${clientSocket.inetAddress.hostAddress}")
+            logger.info("Client connected: ${clientSocket.inetAddress.hostAddress}")
             Thread(WorkerThread(clientSocket)).start()
         }
     }
@@ -19,8 +21,9 @@ class MultiThreadServer(private val port: Int) : Runnable {
 class WorkerThread(
     private val clientSocket: Socket
 ) : Runnable {
+    private val logger = Clogger<WorkerThread>()
     override fun run() {
-        println("Worker thread started")
+        logger.info("Worker thread started")
         Thread.sleep(3000)
         val reader = clientSocket.inputStream.bufferedReader()
         val writer = clientSocket.outputStream.bufferedWriter()
@@ -36,7 +39,7 @@ class WorkerThread(
             s = reader.readLine()
         }
 
-        println("Worker thread terminated")
+        logger.info("Worker thread terminated")
         reader.close()
         writer.close()
         clientSocket.close()

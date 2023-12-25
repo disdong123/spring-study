@@ -1,5 +1,6 @@
 package kr.disdong.spring.batch.study.jpa.job
 
+import kr.disdong.core.Clogger
 import kr.disdong.spring.batch.study.jpa.domain.Member
 import kr.disdong.spring.batch.study.jpa.domain.MemberRepository
 import org.springframework.batch.core.Job
@@ -20,6 +21,7 @@ class MemberRepositoryItemReader(
     private val memberRepository: MemberRepository,
     pageSize: Int
 ) : AbstractPagingItemReader<Member>() {
+    private val logger = Clogger<MemberRepositoryItemReader>()
 
     init {
         setPageSize(pageSize)
@@ -33,7 +35,7 @@ class MemberRepositoryItemReader(
         }
 
         val members = memberRepository.findAll(PageRequest.of(this.page, this.pageSize))
-        System.err.println("[reader] memberSize: ${members.content.size}")
+        logger.info("[reader] memberSize: ${members.content.size}")
         results.addAll(members)
     }
 }
@@ -44,6 +46,7 @@ class SimpleJobConfig(
     private val platformTransactionManager: PlatformTransactionManager,
     private val memberRepository: MemberRepository,
 ) {
+    private val logger = Clogger<SimpleJobConfig>()
     private val CHUNK_SIZE = 1000
     private val PAGE_SIZE = 2
 
@@ -62,7 +65,7 @@ class SimpleJobConfig(
             .chunk<Member, Member>(CHUNK_SIZE, platformTransactionManager)
             .reader(MemberRepositoryItemReader(memberRepository, PAGE_SIZE))
             .processor {
-                System.err.println("[processor] start. member: $it")
+                logger.info("[processor] start. member: $it")
                 it
             }
             .writer(writer())
@@ -73,20 +76,20 @@ class SimpleJobConfig(
     }
 
     private fun writer(): ItemWriter<Member> {
-        System.err.println("[writer] start")
+        logger.info("[writer] start")
         return ItemWriter<Member> { list: Chunk<out Member> ->
             for (member in list.items) {
-                System.err.println("[writer] current member: $member")
+                logger.info("[writer] current member: $member")
                 member.name = member.name + " test"
             }
         }
     }
 
     private fun writerWithSave(): ItemWriter<Member> {
-        System.err.println("[writer] start")
+        logger.info("[writer] start")
         return ItemWriter<Member> { list: Chunk<out Member> ->
             for (member in list.items) {
-                System.err.println("[writer] current member: $member")
+                logger.info("[writer] current member: $member")
                 member.name = member.name + " test"
                 memberRepository.save(member)
             }

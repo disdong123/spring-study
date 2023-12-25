@@ -1,11 +1,14 @@
 package kr.disdong.kotlin.example.concurrency
 
+import kr.disdong.core.Clogger
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class VolatileTest {
+
+    private val logger = Clogger<VolatileTest>()
 
     // https://ttl-blog.tistory.com/238
     @Nested
@@ -19,12 +22,12 @@ internal class VolatileTest {
                 while (running) {
                     count++
                 }
-                println("Thread 1 finished. Counted up to $count")
+                logger.info("Thread 1 finished. Counted up to $count")
             }
             thread1.start()
             Thread {
                 Thread.sleep(100)
-                println("Thread 2 finishing")
+                logger.info("Thread 2 finishing")
                 running = false
             }.start()
 
@@ -47,12 +50,12 @@ internal class VolatileTest {
                 while (running) {
                     count++
                 }
-                println("Thread 1 finished. Counted up to $count")
+                logger.info("Thread 1 finished. Counted up to $count")
             }
             thread1.start()
             Thread {
                 Thread.sleep(100)
-                println("Thread 2 finishing")
+                logger.info("Thread 2 finishing")
                 running = false
             }.start()
 

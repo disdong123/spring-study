@@ -1,5 +1,6 @@
 package kr.disdong.spring.batch.study.multi.datasource.job
 
+import kr.disdong.core.Clogger
 import kr.disdong.spring.batch.study.multi.datasource.domain.master.Member
 import kr.disdong.spring.batch.study.multi.datasource.domain.master.MemberRepository
 import kr.disdong.spring.batch.study.multi.datasource.domain.slave.PostRepository
@@ -22,6 +23,7 @@ class MemberRepositoryItemReader(
     pageSize: Int
 ) : AbstractPagingItemReader<Member>() {
 
+    private val logger = Clogger<MemberRepositoryItemReader>()
     init {
         setPageSize(pageSize)
     }
@@ -34,7 +36,7 @@ class MemberRepositoryItemReader(
         }
 
         val members = memberRepository.findAll(PageRequest.of(this.page, this.pageSize))
-        System.err.println("[reader] memberSize: ${members.content.size}")
+        logger.info("[reader] memberSize: ${members.content.size}")
         results.addAll(members)
     }
 }
@@ -46,6 +48,8 @@ class SimpleJobConfig(
     private val memberRepository: MemberRepository,
     private val postRepository: PostRepository,
 ) {
+
+    private val logger = Clogger<SimpleJobConfig>()
     private val CHUNK_SIZE = 1000
     private val PAGE_SIZE = 2
 
@@ -64,7 +68,7 @@ class SimpleJobConfig(
             .chunk<Member, Member>(CHUNK_SIZE, platformTransactionManager)
             .reader(MemberRepositoryItemReader(memberRepository, PAGE_SIZE))
             .processor {
-                System.err.println("[processor] start. member: $it")
+                logger.info("[processor] start. member: $it")
                 updatePost()
                 it
             }
@@ -81,17 +85,17 @@ class SimpleJobConfig(
     private fun updatePost() {
         postRepository.findAll()
             .map {
-                System.err.println("[processor] updatePost. post: $it")
+                logger.info("[processor] updatePost. post: $it")
                 it.title = it.title + " test"
                 postRepository.save(it)
             }
     }
 
     private fun writer(): ItemWriter<Member> {
-        System.err.println("[writer] start")
+        logger.info("[writer] start")
         return ItemWriter<Member> { list: Chunk<out Member> ->
             for (member in list.items) {
-                System.err.println("[writer] current member: $member")
+                logger.info("[writer] current member: $member")
                 member.name = member.name + " test"
             }
         }

@@ -1,5 +1,6 @@
 package kr.disdong.web.server.example
 
+import kr.disdong.core.Clogger
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 import java.nio.channels.SelectionKey
@@ -9,6 +10,7 @@ import java.nio.channels.SocketChannel
 
 class MultiFlexingServer(private val port: Int) : Runnable {
 
+    private val logger = Clogger<MultiFlexingServer>()
     override fun run() {
         val selector = Selector.open()
 
@@ -24,17 +26,17 @@ class MultiFlexingServer(private val port: Int) : Runnable {
         val buffer = ByteBuffer.allocate(256)
 
         while (true) {
-            println("before select()...")
+            logger.info("before select()...")
             // 채널에 이벤트가 발생할 때까지 대기합니다.
             // 이벤트를 처리할 수 있는 채널이 있으면 채널의 수를 반환합니다.
             selector.select()
-            println("after select()...")
+            logger.info("after select()...")
 
             val iter = selector.selectedKeys().iterator()
             // 이벤트가 발생한 채널에 접근합니다.
             while (iter.hasNext()) {
                 val key = iter.next()
-                println("key: $key")
+                logger.info("key: $key")
 
                 // 커넥션이 연결되면 연결에 대한 이벤트가 발생하고, ServerSocketChannel 로 accept 를 하면 SocketChannel 이 반환됩니다.
                 // 반환된 SocketChannel 을 다시 셀렉터에 등록하면 데이터가 읽을 준비가 되었을 때 이벤트가 발생하고, 적절한 처리를 해주면 됩니다.
@@ -60,14 +62,14 @@ class MultiFlexingServer(private val port: Int) : Runnable {
      * @param channel
      */
     private fun accept(selector: Selector, channel: ServerSocketChannel) {
-        println("register...")
+        logger.info("register...")
         val clientSocketChannel = channel.accept()
         clientSocketChannel.configureBlocking(false)
         clientSocketChannel.register(selector, SelectionKey.OP_READ)
     }
 
     private fun echo(buffer: ByteBuffer, key: SelectionKey) {
-        println("echo...")
+        logger.info("echo...")
         val client = key.channel() as SocketChannel
         client.read(buffer)
         buffer.flip()

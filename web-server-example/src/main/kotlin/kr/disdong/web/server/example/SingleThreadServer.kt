@@ -1,15 +1,18 @@
 package kr.disdong.web.server.example
 
+import kr.disdong.core.Clogger
 import java.net.ServerSocket
 
 class SingleThreadServer(private val port: Int) : Runnable {
+
+    private val logger = Clogger<SingleThreadServer>()
     override fun run() {
-        println("Server started at port $port")
+        logger.info("Server started at port $port")
         val serverSocket = ServerSocket(port)
 
         while (true) {
             val clientSocket = serverSocket.accept()
-            println("Client connected: ${clientSocket.inetAddress.hostAddress}")
+            logger.info("Client connected: ${clientSocket.inetAddress.hostAddress}")
             Thread.sleep(3000)
 
             val reader = clientSocket.inputStream.bufferedReader()
@@ -30,7 +33,7 @@ class SingleThreadServer(private val port: Int) : Runnable {
             writer.close()
             clientSocket.close()
 
-            println("Client disconnected: ${clientSocket.inetAddress.hostAddress}")
+            logger.info("Client disconnected: ${clientSocket.inetAddress.hostAddress}")
         }
     }
 }
