@@ -14,7 +14,8 @@ include(
     "spring-jpa-study:transactional-test",
     "spring-jpa-study:sql-function-example",
     "web-server-example",
-    "spring-basic"
+    "spring-basic",
+    "spring-basic-dbcp"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
