@@ -3,19 +3,19 @@ rootProject.name = "spring-study"
 include(
     "core",
     "kotlin-example",
-    "spring-batch-study:jpa-example",
-    "spring-batch-study:multi-datasource-example",
-    "spring-reactive-study:core",
-    "spring-reactive-study:mvc-server",
-    "spring-reactive-study:server-test",
-    "spring-reactive-study:webflux-server",
-    "spring-reflection-study-jackson-test",
-    "spring-http-connection-study",
-    "spring-jpa-study:transactional-test",
-    "spring-jpa-study:sql-function-example",
+    "spring-batch:jpa-example",
+    "spring-batch:multi-datasource-example",
+    "spring-reactive-test:core",
+    "spring-reactive-test:mvc-server",
+    "spring-reactive-test:server-test",
+    "spring-reactive-test:webflux-server",
+    "spring-jackson-with-reflection",
+    "spring-http-connection-example",
+    "spring-db:transactional-example",
+    "spring-db:sql-function-example",
+    "spring-db:dbcp-example",
     "web-server-example",
-    "spring-basic",
-    "spring-basic-dbcp"
+    "spring-basic"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
