@@ -55,4 +55,51 @@ internal class ServerApplicationTest {
             .andExpect(status().isOk)
             .andExpect(content().string("hello"))
     }
+
+    @Test
+    fun `응답을 인터셉터하여 response info 를 확인한다`() {
+        /**
+         * 아래는 호출한 결과로, 순서대로 request, route, connection-endpoint 정보를 출력합니다.
+         * 결론적으로, route 는 hostname:port 를 의미하고, 같은 route 에 대해서는 커넥션을 재사용합니다.
+         *
+         * ============ response ============
+         * GET https://www.socar.kr/
+         * {s}->https://www.socar.kr:443
+         * 192.168.0.118:63383<->13.225.131.56:443
+         *
+         * ============ response ============
+         * GET https://www.socar.kr/guide
+         * {s}->https://www.socar.kr:443
+         * 192.168.0.118:63383<->13.225.131.56:443
+         *
+         * ============ response ============
+         * GET https://www.naver.com/
+         * {s}->https://www.naver.com:443
+         * 192.168.0.118:63384<->223.130.195.200:443
+         *
+         * ============ response ============
+         * GET https://www.socar.kr/
+         * {s}->https://www.socar.kr:443
+         * 192.168.0.118:63383<->13.225.131.56:443
+         *
+         * ============ response ============
+         * GET https://www.naver.com/
+         * {s}->https://www.naver.com:443
+         * 192.168.0.118:63384<->223.130.195.200:443
+         *
+         * ============ response ============
+         * GET https://map.naver.com/
+         * {s}->https://map.naver.com:443
+         * 192.168.0.118:63385<->110.93.151.164:443
+         *
+         * ============ response ============
+         * GET https://map.naver.com/p/
+         * {s}->https://map.naver.com:443
+         * 192.168.0.118:63385<->110.93.151.164:443
+         */
+
+        mockMvc.perform(get("/connection-test"))
+            .andExpect(status().isOk)
+            .andExpect(content().string("hello"))
+    }
 }

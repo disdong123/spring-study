@@ -1,7 +1,7 @@
-logging:
-  level:
-    org:
-      apache:
-        hc:
-          client5: DEBUG
-          wire: DEBUG
+#logging:
+#  level:
+#    org:
+#      apache:
+#        hc:
+#          client5: DEBUG
+#          wire: DEBUG

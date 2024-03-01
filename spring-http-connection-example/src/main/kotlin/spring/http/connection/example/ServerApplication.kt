@@ -18,6 +18,7 @@ class ServerApplication(
     private val poolingRestTemplate: RestTemplate,
     private val defaultRestTemplate: RestTemplate,
     private val builderRestTemplate: RestTemplate,
+    private val connectionTestTemplate: RestTemplate,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -42,6 +43,17 @@ class ServerApplication(
     @GetMapping("/builder")
     fun builder(): String {
         logger.warn("builderRestTemplate: ${builderRestTemplate.exchange(URI("https://www.socar.kr/"), HttpMethod.GET, null, String::class.java)}")
+        return "hello"
+    }
+
+    @GetMapping("/connection-test")
+    fun connectionTest(): String {
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://www.socar.kr/"), HttpMethod.GET, null, String::class.java)}")
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://www.socar.kr/guide"), HttpMethod.GET, null, String::class.java)}")
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://www.naver.com/"), HttpMethod.GET, null, String::class.java)}")
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://www.socar.kr/"), HttpMethod.GET, null, String::class.java)}")
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://www.naver.com/"), HttpMethod.GET, null, String::class.java)}")
+        logger.warn("connectionTestTemplate: ${connectionTestTemplate.exchange(URI("https://map.naver.com/"), HttpMethod.GET, null, String::class.java)}")
         return "hello"
     }
 }
