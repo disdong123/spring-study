@@ -14,6 +14,7 @@ include(
     "spring-db:transactional-example",
     "spring-db:sql-function-example",
     "spring-db:dbcp-example",
+    "spring-db:jpa-summary",
     "web-server-example",
     "spring-basic"
 )
