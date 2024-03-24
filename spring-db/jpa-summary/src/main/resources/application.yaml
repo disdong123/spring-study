@@ -28,17 +28,17 @@ spring.config.activate.on-profile: default, local, multi-datasource
 
 spring:
   master-datasource:
-    jdbc-url: jdbc:h2:mem:testdb-master;MODE=MySQL
+    jdbc-url: jdbc:h2:mem:testdb-master;MODE=MySQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
   slave-datasource:
-    jdbc-url: jdbc:h2:mem:testdb-slave;MODE=MySQL
+    jdbc-url: jdbc:h2:mem:testdb-slave;MODE=MySQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
   sub-datasource:
-    jdbc-url: jdbc:h2:mem:testdb-sub;MODE=MySQL
+    jdbc-url: jdbc:h2:mem:testdb-sub;MODE=MySQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -48,7 +48,7 @@ spring:
         show_sql: true
         format_sql: true
     database: h2
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     generate-ddl: true
     show-sql: true
     hibernate:
@@ -56,5 +56,6 @@ spring:
 
 logging:
   level:
+    org.springframework.jdbc.datasource: DEBUG
     com.zaxxer.hikari: TRACE
     com.zaxxer.hikari.HikariConfig: DEBUG

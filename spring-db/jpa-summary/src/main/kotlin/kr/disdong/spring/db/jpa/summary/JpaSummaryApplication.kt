@@ -18,11 +18,7 @@ class JpaSummaryApplication(
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments?) {
         println("Hello, JPA!")
-        // println(testService.create())
-        //
-        // println(testService.getOneWithNo())
-        // println(testService.getOneWithMaster())
-        // println(testService.getOneWithSlave())
+        testService.slaveTxManager("hello")
     }
 }
 

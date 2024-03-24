@@ -21,7 +21,7 @@ class PersistenceContextTest {
     @Autowired
     private lateinit var entityManager: EntityManager
 
-    @PersistenceUnit(unitName = "masterEntityManager")
+    @PersistenceUnit(unitName = "mainEntityManager")
     private lateinit var entityManagerFactory: EntityManagerFactory
 
     @Nested

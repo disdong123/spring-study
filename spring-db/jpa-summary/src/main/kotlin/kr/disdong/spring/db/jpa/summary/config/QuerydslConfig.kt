@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class QuerydslConfig(
-    @PersistenceContext(unitName = "masterEntityManager")
-    private val masterEntityManager: EntityManager,
+    @PersistenceContext(unitName = "mainEntityManager")
+    private val mainEntityManager: EntityManager,
     @PersistenceContext(unitName = "subEntityManager")
     private val subEntityManager: EntityManager,
 ) {
 
     @Bean("mainJpaQueryFactory")
     fun mainJpaQueryFactory(): JPAQueryFactory {
-        return JPAQueryFactory(masterEntityManager)
+        return JPAQueryFactory(mainEntityManager)
     }
 
     @Bean("subJpaQueryFactory")
