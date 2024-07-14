@@ -9,6 +9,7 @@ include(
     "spring-reactive-test:mvc-server",
     "spring-reactive-test:server-test",
     "spring-reactive-test:webflux-server",
+    "spring-reactive-test:reactor-test",
     "spring-jackson-with-reflection",
     "spring-http-connection-example",
     "spring-db:transactional-example",
