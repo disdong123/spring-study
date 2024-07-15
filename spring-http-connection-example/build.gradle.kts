@@ -3,8 +3,10 @@ plugins {
 }
 dependencies {
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.webflux)
     // https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5
     implementation("org.apache.httpcomponents.client5:httpclient5:5.3-alpha1")
+    implementation("io.projectreactor.netty:reactor-netty:1.1.21")
 }
 
 tasks.getByName("bootJar") {

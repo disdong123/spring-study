@@ -1,4 +1,4 @@
-package spring.http.connection.example
+package spring.http.connection.example.resttemplate
 
 import org.apache.hc.client5.http.classic.HttpClient
 import org.apache.hc.client5.http.config.RequestConfig

@@ -1,4 +1,4 @@
-package spring.http.connection.example
+package spring.http.connection.example.resttemplate
 
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
