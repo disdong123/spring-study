@@ -11,7 +11,7 @@ dependencies {
     // m1
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
 
-    implementation(project(":spring-reactive-test:core"))
+    implementation(project(":spring-reactive:throughput-test:core"))
 }
 
 tasks.getByName("bootJar") {
