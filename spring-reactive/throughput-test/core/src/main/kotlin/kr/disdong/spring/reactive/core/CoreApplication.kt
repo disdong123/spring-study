@@ -26,14 +26,10 @@ class CoreApplication {
     fun jConnection(): Connection {
         val configuration = ConnectionPoolConfigurationBuilder(
             host = "localhost",
-            port = 3306,
-            database = "reactive-study",
-            username = "root",
-            password = "root",
-            maxActiveConnections = 100,
-            maxIdleTime = 1000L,
-            maxPendingQueries = 10000,
-            connectionValidationInterval = 1000L,
+            port = 3316,
+            database = "reactive_study",
+            username = "test",
+            password = "test",
         )
 
         return MySQLConnectionBuilder.createConnectionPool(configuration)

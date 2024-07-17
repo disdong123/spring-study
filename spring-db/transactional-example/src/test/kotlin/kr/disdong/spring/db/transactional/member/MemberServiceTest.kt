@@ -62,7 +62,7 @@ internal class MemberServiceTest {
             assertThrows(RuntimeException::class.java) {
                 memberService.join()
             }
-            assertFalse(memberRepository.findById(1).isEmpty)
+            assertFalse(memberRepository.findAll().isEmpty())
         }
 
         @Test
@@ -71,7 +71,7 @@ internal class MemberServiceTest {
             assertThrows(RuntimeException::class.java) {
                 memberMixedService.join()
             }
-            assertFalse(memberRepository.findById(1).isEmpty)
+            assertFalse(memberRepository.findAll().isEmpty())
         }
 
         @Test
@@ -80,7 +80,7 @@ internal class MemberServiceTest {
             assertThrows(RuntimeException::class.java) {
                 memberTransactionService.joinCallNormalTransaction()
             }
-            assertTrue(memberRepository.findById(1).isEmpty)
+            assertTrue(memberRepository.findAll().isEmpty())
         }
 
         @Test
@@ -89,7 +89,7 @@ internal class MemberServiceTest {
             assertThrows(RuntimeException::class.java) {
                 memberTransactionService.joinCallNewTransaction()
             }
-            assertTrue(memberRepository.findById(1).isEmpty)
+            assertTrue(memberRepository.findAll().isEmpty())
         }
 
         @Test
@@ -97,7 +97,7 @@ internal class MemberServiceTest {
             assertThrows(RuntimeException::class.java) {
                 memberMixedService.joinWithTransactionCalljoinNewTransaction()
             }
-            assertFalse(memberRepository.findById(1).isEmpty)
+            assertFalse(memberRepository.findAll().isEmpty())
         }
     }
 }

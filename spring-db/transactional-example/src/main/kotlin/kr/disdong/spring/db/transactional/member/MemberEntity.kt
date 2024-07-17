@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 @Entity(name = "member")
 class MemberEntity(
     @Id
-    val id: Long = 0,
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
     val name: String,
 )
 

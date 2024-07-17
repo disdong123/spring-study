@@ -67,11 +67,19 @@ fun test(threadPoolSize: Int, loopCount: Int, testType: TestType) {
 }
 
 fun main() {
-    // test(20, 20, TestType.THREAD_SLEEP_WITH_REST_TEMPLATE) // 2 ~ . 연속으로 하면 그 다음건 4초정도 걸리는데 이유가?
+    // TODO
+    //  1. webflux - blocking, mono, coroutine 테스트
+    //  2. webflux - 가상스레드 테스트 (jdk 21)
+    //  3. webflux - coroutine, 가상스레드 blocking call 에서 os 스레드가 blocking 되는지 확인 (coroutine o, virtual thread x)
+    //  4. mvc - blocking call 인 경우 thread 와 coroutine 비동기 처리 차이 테스트
+    //  5. mvc - non-blocking call 인 경우 thread 와 coroutine 비동기 처리 차이 테스트
+    //  6. mvc - 가상스레드
+
+    // test(20, 20, TestType.THREAD_SLEEP_WITH_REST_TEMPLATE)   // 3 ~ ???
     // test(20, 20, TestType.THREAD_SLEEP_WITH_WEB_CLIENT_REACTIVE) // 2 ~
     // test(20, 20, TestType.THREAD_SLEEP_WITH_WEB_CLIENT_COROUTINE) // 2 ~
 
-    // test(20, 20, TestType.MONO_DELAY_WITH_REST_TEMPLATE) // 2 ~
+    // test(100, 20, TestType.MONO_DELAY_WITH_REST_TEMPLATE) // 2 ~
     // test(20, 20, TestType.MONO_DELAY_WITH_WEB_CLIENT_REACTIVE) // 1 ~
     // test(20, 20, TestType.MONO_DELAY_WITH_WEB_CLIENT_COROUTINE) // 1 ~
 
@@ -88,6 +96,6 @@ fun main() {
     // test(20, 20, TestType.JASYNC_COMPLETABLE_FUTURE_WITH_WEB_CLIENT_COROUTINE) // 1 ~
 
     // test(20, 20, TestType.JASYNC_COROUTINE_WITH_REST_TEMPLATE) // 2 ~
-    test(20, 20, TestType.JASYNC_COROUTINE_WITH_WEB_CLIENT_REACTIVE) // 1 ~
+    // test(20, 20, TestType.JASYNC_COROUTINE_WITH_WEB_CLIENT_REACTIVE) // 1 ~
     // test(20, 20, TestType.JASYNC_COROUTINE_WITH_WEB_CLIENT_COROUTINE) // 1~
 }

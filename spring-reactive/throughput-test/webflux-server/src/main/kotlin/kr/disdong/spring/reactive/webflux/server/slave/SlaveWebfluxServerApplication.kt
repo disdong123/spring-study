@@ -27,7 +27,7 @@ class SlaveWebfluxServerApplication(
 
     @GetMapping("/thread-sleep")
     fun threadSleep(idx: String): String {
-        logger.info("threadSleep()")
+        logger.info("threadSleep($idx)")
         Thread.sleep(1000)
         return "/threadSleep idx: $idx"
     }

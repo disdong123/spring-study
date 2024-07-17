@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 plugins {
     id("application")
 }
@@ -23,5 +25,19 @@ tasks.getByName("jar") {
 }
 
 application {
-    mainClass.set("kr.disdong.spring.reactive.study.webflux.server.master.MasterWebfluxServerApplicationKt")
+    mainClass.set("kr.disdong.spring.reactive.webflux.server.master.MasterWebfluxServerApplicationKt")
+}
+
+tasks.register<BootRun>("bootRunApp1") {
+    group = "application"
+    description = "Run Application1"
+    mainClass.set("kr.disdong.spring.reactive.webflux.server.master.MasterWebfluxServerApplicationKt")
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
+tasks.register<BootRun>("bootRunApp2") {
+    group = "application"
+    description = "Run Application2"
+    mainClass.set("kr.disdong.spring.reactive.webflux.server.slave.SlaveWebfluxServerApplicationKt")
+    classpath = sourceSets["main"].runtimeClasspath
 }

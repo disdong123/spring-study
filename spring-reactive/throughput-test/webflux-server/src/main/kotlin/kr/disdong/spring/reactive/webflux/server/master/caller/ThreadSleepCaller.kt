@@ -19,7 +19,7 @@ class ThreadSleepCaller {
 
     @GetMapping("/rest-template")
     fun callWithRestTemplate(idx: String): String? {
-        logger.info("callWithRestTemplate()")
+        logger.info("callWithRestTemplate($idx)")
         return restTemplate.getForObject(
             "http://localhost:8081/thread-sleep?idx={idx}",
             String::class.java,
