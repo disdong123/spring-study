@@ -5,6 +5,11 @@ plugins {
 }
 dependencies {
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.webflux)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
+    implementation("io.projectreactor.netty:reactor-netty:1.1.21")
 }
 
 tasks.getByName("bootJar") {

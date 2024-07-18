@@ -39,12 +39,12 @@ pwd
 #
 #echo "mvc 2 start..."
 
-./gradlew clean :spring-reactive:throughput-test:webflux-server:build
-
-./gradlew :spring-reactive:throughput-test:webflux-server:bootRunApp1 &
-
-echo "webflux 1 start..."
-
-./gradlew :spring-reactive:throughput-test:webflux-server:bootRunApp2 &
-
-echo "webflux 2 start..."
+#./gradlew clean :spring-reactive:throughput-test:webflux-server:build
+#
+#./gradlew :spring-reactive:throughput-test:webflux-server:bootRunApp1 &
+#
+#echo "webflux 1 start..."
+#
+#./gradlew :spring-reactive:throughput-test:webflux-server:bootRunApp2 &
+#
+#echo "webflux 2 start..."

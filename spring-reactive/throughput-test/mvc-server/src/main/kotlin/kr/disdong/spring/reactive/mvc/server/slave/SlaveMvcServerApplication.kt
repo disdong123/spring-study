@@ -30,6 +30,5 @@ class SlaveMvcServerApplication {
 
 fun main(args: Array<String>) {
     System.setProperty("server.port", "8083")
-    System.setProperty("reactor.netty.ioWorkerCount", "10")
     runApplication<SlaveMvcServerApplication>(*args)
 }

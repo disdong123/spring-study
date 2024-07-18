@@ -35,12 +35,12 @@ subprojects {
         testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter-kotlin:0.4.10")
     }
 
-    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.sourceCompatibility = JavaVersion.VERSION_21
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
 
