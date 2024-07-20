@@ -18,6 +18,9 @@ enum class TestType(val url: String) {
     MVC_ASYNC_VIRTUAL_THREAD_WITH_REST_TEMPLATE("/async-vt/rest-template"),
     MVC_ASYNC_VIRTUAL_THREAD_WITH_REST_CLIENT("/async-vt/rest-client"),
 
+    MVC_ASYNC_ANNOTATION_THREAD_SLEEP("/async/annotation"),
+    MVC_ASYNC_VIRTUAL_THREAD_ANNOTATION_THREAD_SLEEP("/async-vt/annotation"),
+
     // TODO delay, thread sleep 으로 테스트합니다.
     THREAD_SLEEP_WITH_REST_TEMPLATE("/thread-sleep/rest-template"),
     THREAD_SLEEP_WITH_WEB_CLIENT_REACTIVE("/thread-sleep/web-client-reactive"),
@@ -104,7 +107,10 @@ fun main() {
      * 지금은 withContext 에 virtual thread pool 을 넣는 방식으로 비동기 처리했는데 이게 올바른 테스트가 맞는지 확인이 필요할 듯.
      * 확실히 visual vm 으로 봤을때 스레드가 더 생기지는 않는다.
      */
-    test(200, 200, TestType.MVC_ASYNC_VIRTUAL_THREAD_WITH_REST_TEMPLATE, 8082)
+    // test(200, 200, TestType.MVC_ASYNC_VIRTUAL_THREAD_WITH_REST_TEMPLATE, 8082)
+
+    test(200, 200, TestType.MVC_ASYNC_ANNOTATION_THREAD_SLEEP, 8082)
+    // test(200, 200, TestType.MVC_ASYNC_VIRTUAL_THREAD_ANNOTATION_THREAD_SLEEP, 8082)
 
     /**
      * total: 2.x or 3.x
