@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatusCode
 
+@Disabled
 internal class SpringBasicApplicationKtTest {
 
     private val client = TestRestTemplate()
@@ -16,9 +17,8 @@ internal class SpringBasicApplicationKtTest {
         server3()
     }
 
-    @Disabled
     @Test
-    fun `동작 테스트 - 8080 포트 필ㅇ`() {
+    fun `동작 테스트 - 8080 포트 필요`() {
         val response = client.getForEntity("http://localhost:8080/posts", String::class.java)
         assertEquals(response.statusCode, HttpStatusCode.valueOf(200))
         assertEquals(response.body, "posts")
